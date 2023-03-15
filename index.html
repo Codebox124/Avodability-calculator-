@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+</head>
+<body>
+	<div class="container">
+		<div class="cal">
+            <h1>Affordability Calculator</h1>
+		<form id="affordability-form">
+			<label for="income">Monthly Income</label>
+			<input type="number" id="income" name="income">
+
+			<label for="expenses">Monthly Expenses</label>
+			<input type="number" id="expenses" name="expenses">
+
+			<label for="debt-to-income">Debt-to-Income Ratio</label>
+			<input type="number" id="debt-to-income" name="debt-to-income">
+
+			<label for="interest">Interest Rate</label>
+			<input type="number" id="interest" name="interest">
+
+			<label for="term">Loan Term (years)</label>
+			<input type="number" id="term" name="term">
+
+			<button type="submit">Calculate</button>
+		</form>
+        </div>
+
+		<div id="result" style="display: none;">
+			<h2>Result</h2>
+			<p>Your monthly payment will be <span id="monthly-payment"></span>.</p>
+			<p>You will pay a total of <span id="total-payment"></span> over the life of the loan.</p>
+			<p>The total interest paid will be <span id="total-interest"></span>.</p>
+			<div class="range-container">
+				<p>Based on the information you provided, a house at this price should fit comfortably within your budget:</p>
+				<input type="range" id="affordability-range" min="0" max="100" value="0">
+				<div id="affordability-output"></div>
+			</div>
+		</div>
+	</div>
+<script src="main.js"></script>	
+</body>
+</html>
