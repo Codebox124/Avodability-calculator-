@@ -61,7 +61,7 @@ expensesInput.addEventListener("input", function() {
   // Calculate DTI ratio
   const income = parseFloat(incomeInput.value);
   const expenses = parseFloat(expensesInput.value);
-  const dti = expenses > 0 ? ((income / expenses) * 100).toFixed(0) : 0;
+  const dti = expenses > 0 ? ((expenses / income  ) * 100).toFixed(0) : 0;
 
   // Update DTI input field
   dtiInput.value = dti;
