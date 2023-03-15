@@ -44,3 +44,60 @@ affordabilityRange.addEventListener('input', () => {
   const affordabilityValue = affordabilityRange.value;
   affordabilityOutput.innerText = `$${(affordabilityValue * document.getElementById('income').value / 100).toFixed(2)}`;
 });
+
+
+
+// Get input elements
+const incomeInput = document.getElementById("income");
+const expensesInput = document.getElementById("expenses");
+const interestInput = document.getElementById("interest");
+const dtiInput = document.getElementById("debt-to-income");
+const slider = document.getElementById("slider");
+const output = document.getElementById("output");
+
+// Add event listener to expenses input
+expensesInput.addEventListener("input", function() {
+  // Calculate DTI ratio
+  const income = Number(incomeInput.value);
+  const expenses = Number(expensesInput.value);
+  const dti = expenses > 0 ? ((income / expenses) * 100).toFixed(2) : 0;
+
+  // Update DTI input field
+  dtiInput.value = dti;
+
+  // Update slider position and output message
+  slider.value = dti;
+  output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%.`;
+});
+
+// Add event listener to interest input
+interestInput.addEventListener("input", function() {
+  // Calculate monthly interest rate
+  const interest = Number(interestInput.value) / 100 / 12;
+
+  // Update slider maximum value
+  const maxPrice = calculateMaxPrice();
+  slider.max = maxPrice;
+
+  // Update output message
+  const dti = Number(dtiInput.value);
+  output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%. The maximum house price you can afford with a ${interestInput.value}% interest rate and a DTI ratio of ${dti}% is $${maxPrice.toFixed(2)}.`;
+});
+
+// Add event listener to slider
+slider.addEventListener("input", function() {
+  // Update output message
+  const dti = Number(dtiInput.value);
+  const price = Number(slider.value);
+  output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%. You can afford a house up to $${price}.`;
+});
+
+// Calculate maximum house price based on input values
+function calculateMaxPrice() {
+  const income = Number(incomeInput.value);
+  const expenses = Number(expensesInput.value);
+  const interest = Number(interestInput.value) / 100 / 12;
+  const dti = Number(dtiInput.value) / 100;
+
+  return ((income * dti - expenses) / interest).toFixed(2);
+}

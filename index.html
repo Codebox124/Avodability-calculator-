@@ -13,19 +13,19 @@
             <h1>Affordability Calculator</h1>
 		<form id="affordability-form">
 			<label for="income">Monthly Income</label>
-			<input type="number" id="income" name="income">
+			<input type="number" id="income" name="income" pattern="[0-9]+([\.][0-9]+)?" required>
 
 			<label for="expenses">Monthly Expenses</label>
-			<input type="number" id="expenses" name="expenses">
+			<input type="number" id="expenses" name="expenses" pattern="[0-9]+([\.][0-9]+)?" required>
 
 			<label for="debt-to-income">Debt-to-Income Ratio</label>
-			<input type="number" id="debt-to-income" name="debt-to-income">
+			<input type="number" id="debt-to-income" name="debt-to-income" pattern="[0-9]+([\.][0-9]+)?" required>
 
 			<label for="interest">Interest Rate</label>
-			<input type="number" id="interest" name="interest">
+			<input type="number" id="interest" name="interest" pattern="[0-9]+([\.][0-9]+)?" required>
 
 			<label for="term">Loan Term (years)</label>
-			<input type="number" id="term" name="term">
+			<input type="number" id="term" name="term" pattern="[0-9]+([\.][0-9]+)?" required>
 
 			<button type="submit">Calculate</button>
 		</form>
