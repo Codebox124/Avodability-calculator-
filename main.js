@@ -22,16 +22,16 @@ function calculateAffordability(event) {
   const discountFactor = (Math.pow(1 + monthlyInterestRate, totalPayments) - 1) /
     (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments));
 
-  const monthlyPayment = (maxMonthlyPayment / discountFactor).toFixed(2);
+  const monthlyPayment = (maxMonthlyPayment / discountFactor).toFixed(0);
   const totalPayment = (monthlyPayment * totalPayments).toFixed(2);
-  const totalInterest = (totalPayment - (maxMonthlyPayment * totalPayments)).toFixed(2);
+  const totalInterest = (totalPayment - (maxMonthlyPayment * totalPayments)).toFixed(1);
 
   monthlyPaymentElement.innerText = `$${monthlyPayment}`;
   totalInterestElement.innerText = `$${totalInterest}`;
   totalPaymentElement.innerText = `$${totalPayment}`;
 
   const maxHomePrice = (maxMonthlyPayment / (monthlyInterestRate * discountFactor)) *
-    (1 - Math.pow((1 + monthlyInterestRate), -totalPayments)).toFixed(2);
+    (1 - Math.pow((1 + monthlyInterestRate), -totalPayments)).toFixed(0);
   affordabilityRange.value = Math.floor((maxHomePrice / income) * 100);
   affordabilityOutput.innerText = `$${maxHomePrice}`;
 
@@ -42,8 +42,9 @@ affordabilityForm.addEventListener('submit', calculateAffordability);
 
 affordabilityRange.addEventListener('input', () => {
   const affordabilityValue = affordabilityRange.value;
-  affordabilityOutput.innerText = `$${(affordabilityValue * document.getElementById('income').value / 100).toFixed(2)}`;
+  affordabilityOutput.innerText = `$${(affordabilityValue * document.getElementById('income').value / 100).toFixed(0)}`;
 });
+
 
 
 
@@ -58,9 +59,9 @@ const output = document.getElementById("output");
 // Add event listener to expenses input
 expensesInput.addEventListener("input", function() {
   // Calculate DTI ratio
-  const income = Number(incomeInput.value);
-  const expenses = Number(expensesInput.value);
-  const dti = expenses > 0 ? ((income / expenses) * 100).toFixed(2) : 0;
+  const income = parseFloat(incomeInput.value);
+  const expenses = parseFloat(expensesInput.value);
+  const dti = expenses > 0 ? ((income / expenses) * 100).toFixed(0) : 0;
 
   // Update DTI input field
   dtiInput.value = dti;
@@ -73,31 +74,31 @@ expensesInput.addEventListener("input", function() {
 // Add event listener to interest input
 interestInput.addEventListener("input", function() {
   // Calculate monthly interest rate
-  const interest = Number(interestInput.value) / 100 / 12;
+  const interest = parseFloat(interestInput.value) / 100 / 12;
 
   // Update slider maximum value
   const maxPrice = calculateMaxPrice();
   slider.max = maxPrice;
 
   // Update output message
-  const dti = Number(dtiInput.value);
-  output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%. The maximum house price you can afford with a ${interestInput.value}% interest rate and a DTI ratio of ${dti}% is $${maxPrice.toFixed(2)}.`;
+  const dti = parseFloat(dtiInput.value);
+  output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%. The maximum house price you can afford with a ${interestInput.value}% interest rate and a DTI ratio of ${dti}% is $${maxPrice.toFixed(0)}.`;
 });
 
 // Add event listener to slider
 slider.addEventListener("input", function() {
   // Update output message
-  const dti = Number(dtiInput.value);
-  const price = Number(slider.value);
+  const dti = parseFloat(dtiInput.value);
+  const price = parseFloat(slider.value);
   output.innerHTML = `Based on the information you provided, a house at this price should fit comfortably within your budget with a DTI ratio of ${dti}%. You can afford a house up to $${price}.`;
 });
 
 // Calculate maximum house price based on input values
 function calculateMaxPrice() {
-  const income = Number(incomeInput.value);
-  const expenses = Number(expensesInput.value);
-  const interest = Number(interestInput.value) / 100 / 12;
-  const dti = Number(dtiInput.value) / 100;
+  const income = parseFloat(incomeInput.value);
+  const expenses = parseFloat(expensesInput.value);
+  const interest = parseFloat(interestInput.value) / 100 / 12;
+  const dti = parseFloat(dtiInput.value) / 100;
 
-  return ((income * dti - expenses) / interest).toFixed(2);
+  return ((income * dti - expenses) / interest).toFixed(0);
 }
